@@ -1,0 +1,62 @@
+{
+  "name": "http_tester",
+  "version": "0.0.1",
+  "description": "HTTP GET, POST, PUT, DELETE tester",
+  "main": "index.tsx",
+  "scripts": {
+    "start": "webpack-dev-server --config ./webpack.config.dev.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wn-seko/http_tester.git"
+  },
+  "keywords": [
+    "axios"
+  ],
+  "author": "wn.seko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wn-seko/http_tester/issues"
+  },
+  "homepage": "https://github.com/wn-seko/http_tester#readme",
+  "dependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/react": "^16.4.7",
+    "@types/react-dom": "^16.0.6",
+    "@types/react-redux": "^6.0.5",
+    "@types/react-router-dom": "^4.3.0",
+    "@types/react-router-redux": "^5.0.15",
+    "@types/recompose": "^0.26.2",
+    "axios": "^0.18.0",
+    "history": "^4.7.2",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.3.1",
+    "react-router-redux": "^5.0.0-alpha.9",
+    "recompose": "^0.27.1",
+    "redbox-react": "^1.6.0",
+    "redux-thunk": "^2.3.0",
+    "semantic-ui-css": "^2.3.3",
+    "semantic-ui-react": "^0.82.1",
+    "styled-components": "^3.3.3"
+  },
+  "devDependencies": {
+    "awesome-typescript-loader": "^5.2.0",
+    "css-loader": "^1.0.0",
+    "file-loader": "^1.1.11",
+    "html-webpack-plugin": "^3.2.0",
+    "react-hot-loader": "^4.3.4",
+    "redux-devtools-extension": "^2.13.5",
+    "redux-logger": "^3.0.6",
+    "source-map-loader": "^0.2.3",
+    "style-loader": "^0.21.0",
+    "typescript": "^2.9.2",
+    "url-loader": "^1.0.1",
+    "webpack": "^4.16.2",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.5",
+    "webpack-merge": "^4.1.3"
+  }
+}
