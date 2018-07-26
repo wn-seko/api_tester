@@ -54,7 +54,7 @@ const Top = (props: FormProps) => {
 
   return (
     <Container>
-      <Header as="h1">Http Tester</Header>
+      <Header as="h1">Api Tester</Header>
       <Form>
         <Form.Field width="12">
           <label>BaseUrl</label>

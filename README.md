@@ -1,4 +1,4 @@
-# HttpTester
+# ApiTester
 
 ## install
 
