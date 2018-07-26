@@ -37,7 +37,8 @@ export const thunkActions = {
           dispatch(actions.postSuccess(filteredResponse, settings))
         })
         .catch(result => {
-          const filteredResponse = { status: result.response.status, data: result.response.data }
+          const response = result.response || {}
+          const filteredResponse = { status: response.status, data: response.data }
           dispatch(actions.postFailure(filteredResponse, settings))
         })
     }
