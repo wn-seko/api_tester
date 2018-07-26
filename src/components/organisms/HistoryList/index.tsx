@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Accordion, Message } from 'semantic-ui-react'
 import { RequestSettings, Response } from '../../../modules/request/types'
+import styled from 'styled-components'
 
 interface Props {
   history: Array<{
@@ -9,6 +10,10 @@ interface Props {
     response: Response
   }>
 }
+
+const WordBreakContent = styled(Message.Content)`
+  word-break: break-all;
+`
 
 const HistoryList = (props: Props) => {
   const { history } = props
@@ -21,7 +26,7 @@ const HistoryList = (props: Props) => {
     <Accordion
       styled={true}
       fluid={true}
-      panels={history.map((item, i) => ({
+      panels={history.reverse().map((item, i) => ({
         key: `history-${i}`,
         title: {
           content: `${item.settings.url} - ${item.response.status}`
@@ -30,15 +35,15 @@ const HistoryList = (props: Props) => {
           content: (
             <Message success={item.level === 'success'} error={item.level === 'error'}>
               <Message.Header>{`Status: ${item.response.status}`}</Message.Header>
-              <Message.Content>{JSON.stringify(item.response.data)}</Message.Content>
+              <WordBreakContent>{JSON.stringify(item.response.data)}</WordBreakContent>
               <Message.Header>BaseUrl</Message.Header>
-              <Message.Content>{item.settings.baseURL}</Message.Content>
+              <WordBreakContent>{item.settings.baseURL}</WordBreakContent>
               <Message.Header>Path</Message.Header>
-              <Message.Content>{item.settings.url}</Message.Content>
+              <WordBreakContent>{item.settings.url}</WordBreakContent>
               <Message.Header>Headers</Message.Header>
-              <Message.Content>{JSON.stringify(item.settings.headers)}</Message.Content>
+              <WordBreakContent>{JSON.stringify(item.settings.headers)}</WordBreakContent>
               <Message.Header>body</Message.Header>
-              <Message.Content>{JSON.stringify(item.settings.data)}</Message.Content>
+              <WordBreakContent>{JSON.stringify(item.settings.data)}</WordBreakContent>
             </Message>
           )
         }
