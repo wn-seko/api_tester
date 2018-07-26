@@ -1,7 +1,7 @@
 import { ThunkDispatch } from 'redux-thunk'
 import { requestPost } from '../../libs/request'
 import { RootState } from '../index'
-import { ActionTypes, ActionUnion, createAction } from './types'
+import { ActionTypes, ActionUnion, createAction, RequestSettings, Response } from './types'
 
 // Actions
 export const actions = {
@@ -9,15 +9,15 @@ export const actions = {
     createAction({
       type: ActionTypes.POST
     }),
-  postSuccess: (status: number, data: any) =>
+  postSuccess: (response: Response, settings: RequestSettings) =>
     createAction({
       type: ActionTypes.POST_SUCCESS,
-      payload: { status, data }
+      payload: { response, settings }
     }),
-  postFailure: (status: number, data: any) =>
+  postFailure: (response: Response, settings: RequestSettings) =>
     createAction({
       type: ActionTypes.POST_FAILURE,
-      payload: { status, data }
+      payload: { response, settings }
     })
 }
 
@@ -28,14 +28,17 @@ export type Dispatch = ThunkDispatch<RootState, undefined, Action>
 export const thunkActions = {
   requestPost: (baseURL: string, url: string, headers: any, data: any) => {
     return (dispatch: Dispatch) => {
+      const settings = { baseURL, url, headers, data, method: 'post' }
       dispatch(actions.postAction())
 
       return requestPost(baseURL, url, headers, data)
         .then(response => {
-          dispatch(actions.postSuccess(response.status, response.data))
+          const filteredResponse = { status: response.status, data: response.data }
+          dispatch(actions.postSuccess(filteredResponse, settings))
         })
         .catch(result => {
-          dispatch(actions.postFailure(result.response.status, result.response.data))
+          const filteredResponse = { status: result.response.status, data: result.response.data }
+          dispatch(actions.postFailure(filteredResponse, settings))
         })
     }
   }

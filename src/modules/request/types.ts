@@ -20,8 +20,23 @@ export interface LoadingState {
 export interface State {
   level: string
   loading: LoadingState
-  response: {
-    status: number
-    data: any
-  }
+  response: Response
+  history: Array<{
+    level: string
+    settings: RequestSettings
+    response: Response
+  }>
+}
+
+export interface Response {
+  status: number
+  data: any
+}
+
+export interface RequestSettings {
+  baseURL: string
+  url: string
+  headers: any
+  data: any
+  method: string
 }

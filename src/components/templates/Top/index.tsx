@@ -1,8 +1,9 @@
 import * as React from 'react'
-import { Container, Form, Header, Message } from 'semantic-ui-react'
+import { Container, Dimmer, Form, Header, Loader, Message } from 'semantic-ui-react'
 import { InjectedFormikProps } from 'formik'
 
 import JsonEditor from '../../../components/organisms/JsonEditor'
+import HistoryList from '../../../containers/organisms/HistoryList'
 
 interface Props {
   level: string
@@ -25,7 +26,7 @@ interface FormValue {
 export type FormProps = InjectedFormikProps<Props, FormValue>
 
 const Top = (props: FormProps) => {
-  const { values, setFieldValue, handleChange, handleBlur, handleSubmit, handleReset, response, level } = props
+  const { values, setFieldValue, handleChange, handleBlur, handleSubmit, handleReset, response, level, loading } = props
 
   const onClickSubmit = (e: any) => {
     handleSubmit(e)
@@ -76,6 +77,11 @@ const Top = (props: FormProps) => {
           <Message.Content>{responseData}</Message.Content>
         </Message>
       )}
+      <Header as="h2">History</Header>
+      <HistoryList />
+      <Dimmer active={loading.access} inverted={true}>
+        <Loader inverted={true}>Loading</Loader>
+      </Dimmer>
     </Container>
   )
 }
