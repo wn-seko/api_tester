@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Container, Dimmer, Form, Header, Loader, Message } from 'semantic-ui-react'
 import { InjectedFormikProps } from 'formik'
+import styled from 'styled-components'
 
 import JsonEditor from '../../../components/organisms/JsonEditor'
 import HistoryList from '../../../containers/organisms/HistoryList'
@@ -26,6 +27,10 @@ interface FormValue {
 }
 
 export type FormProps = InjectedFormikProps<Props, FormValue>
+
+const WordBreakContent = styled(Message.Content)`
+  word-break: break-all;
+`
 
 const Top = (props: FormProps) => {
   const {
@@ -81,13 +86,13 @@ const Top = (props: FormProps) => {
       {level === 'success' && (
         <Message success={true}>
           <Message.Header>{`Success: ${response.status}`}</Message.Header>
-          <Message.Content>{responseData}</Message.Content>
+          <WordBreakContent>{responseData}</WordBreakContent>
         </Message>
       )}
       {level === 'error' && (
         <Message error={true}>
           <Message.Header>{`Error: ${response.status}`}</Message.Header>
-          <Message.Content>{responseData}</Message.Content>
+          <WordBreakContent>{responseData}</WordBreakContent>
         </Message>
       )}
       <Header as="h2">History</Header>
