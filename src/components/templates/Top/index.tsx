@@ -4,6 +4,7 @@ import { InjectedFormikProps } from 'formik'
 
 import JsonEditor from '../../../components/organisms/JsonEditor'
 import HistoryList from '../../../containers/organisms/HistoryList'
+import { RequestSettings } from '../../../modules/request/types'
 
 interface Props {
   level: string
@@ -14,6 +15,7 @@ interface Props {
     status: number
     data: any
   }
+  handleOpenQuery: (settings: RequestSettings) => void
 }
 
 interface FormValue {
@@ -26,7 +28,18 @@ interface FormValue {
 export type FormProps = InjectedFormikProps<Props, FormValue>
 
 const Top = (props: FormProps) => {
-  const { values, setFieldValue, handleChange, handleBlur, handleSubmit, handleReset, response, level, loading } = props
+  const {
+    values,
+    setFieldValue,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    handleReset,
+    response,
+    level,
+    loading,
+    handleOpenQuery
+  } = props
 
   const onClickSubmit = (e: any) => {
     handleSubmit(e)
@@ -78,7 +91,7 @@ const Top = (props: FormProps) => {
         </Message>
       )}
       <Header as="h2">History</Header>
-      <HistoryList />
+      <HistoryList handleOpenQuery={handleOpenQuery} />
       <Dimmer active={loading.access} inverted={true}>
         <Loader inverted={true}>Loading</Loader>
       </Dimmer>

@@ -1,10 +1,11 @@
-import { compose, pure } from 'recompose'
+import { compose, pure, withProps } from 'recompose'
 import { withRouter } from 'react-router-dom'
-import { withFormik } from 'formik'
+import { withFormik, InjectedFormikProps } from 'formik'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actions, RootState } from '../../../modules'
 import { requestSelector } from '../../../modules/selector'
+import { RequestSettings } from '../../../modules/request/types'
 
 import Top from '../../../components/templates/Top'
 
@@ -18,6 +19,8 @@ interface FormValues {
   baseUrl: string
   path: string
 }
+
+export type FormProps = InjectedFormikProps<{}, FormValues>
 
 const connector = connect(
   (state: RootState) => ({
@@ -63,10 +66,20 @@ const parseToJson = (stringify: string) => {
   }
 }
 
+const withHandleOpenQuery = withProps((props: FormProps) => ({
+  handleOpenQuery: (settings: RequestSettings) => {
+    props.setFieldValue('headers', JSON.stringify(settings.headers, null, '  '))
+    props.setFieldValue('body', JSON.stringify(settings.data, null, '  '))
+    props.setFieldValue('baseUrl', settings.baseURL)
+    props.setFieldValue('path', settings.url)
+  }
+}))
+
 const enhancer = compose(
   withRouter,
   connector,
   withForm,
+  withHandleOpenQuery,
   pure
 )
 

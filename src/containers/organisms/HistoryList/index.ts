@@ -7,7 +7,12 @@ import { RequestSettings, Response } from '../../../modules/request/types'
 
 import HistoryList from '../../../components/organisms/HistoryList'
 
+interface OuterProps {
+  handleOpenQuery: (settings: RequestSettings) => void
+}
+
 interface InnerProps {
+  handleOpenQuery: (settings: RequestSettings) => void
   history: Array<{
     level: string
     settings: RequestSettings
@@ -19,7 +24,7 @@ const connector = connect((state: RootState) => ({
   history: requestSelector.getHistory(state)
 }))
 
-const enhancer = compose<InnerProps, {}>(
+const enhancer = compose<InnerProps, OuterProps>(
   withRouter,
   connector,
   pure
