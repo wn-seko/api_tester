@@ -33,7 +33,12 @@ export default (state: State = initialState, action: Action): State => {
         level: 'success',
         response: action.payload.response,
         history: state.history.concat([
-          { response: action.payload.response, settings: action.payload.settings, level: 'success' }
+          {
+            response: action.payload.response,
+            settings: action.payload.settings,
+            timestamp: action.payload.timestamp,
+            level: 'success'
+          }
         ])
       }
     case ActionTypes.GET_FAILURE:
@@ -46,7 +51,12 @@ export default (state: State = initialState, action: Action): State => {
         level: 'error',
         response: action.payload.response,
         history: state.history.concat([
-          { response: action.payload.response, settings: action.payload.settings, level: 'error' }
+          {
+            response: action.payload.response,
+            settings: action.payload.settings,
+            timestamp: action.payload.timestamp,
+            level: 'error'
+          }
         ])
       }
     default:

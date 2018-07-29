@@ -3,13 +3,16 @@ import { Accordion, Message, Button } from 'semantic-ui-react'
 import { RequestSettings, Response } from '../../../modules/request/types'
 import styled from 'styled-components'
 
+interface HistoryProps {
+  level: string
+  settings: RequestSettings
+  response: Response
+  timestamp: number
+}
+
 interface Props {
   handleOpenQuery: (settings: RequestSettings) => void
-  history: Array<{
-    level: string
-    settings: RequestSettings
-    response: Response
-  }>
+  history: Array<HistoryProps>
 }
 
 const WordBreakContent = styled(Message.Content)`
@@ -23,12 +26,14 @@ const HistoryList = (props: Props) => {
     return null
   }
 
+  const sortedHistory = history.sort((ah: HistoryProps, bh: HistoryProps) => (ah.timestamp < bh.timestamp ? 1 : -1))
+
   return (
     <Accordion
       styled={true}
       fluid={true}
-      panels={history.reverse().map((item, i) => ({
-        key: `history-${i}`,
+      panels={sortedHistory.map(item => ({
+        key: `history-${item.timestamp}`,
         title: {
           content: `${item.settings.method.toUpperCase()} ${item.settings.url} - ${item.response.status}`
         },

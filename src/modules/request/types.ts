@@ -34,6 +34,7 @@ export interface State {
     level: string
     settings: RequestSettings
     response: Response
+    timestamp: number
   }>
 }
 
