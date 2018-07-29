@@ -30,7 +30,7 @@ const HistoryList = (props: Props) => {
       panels={history.reverse().map((item, i) => ({
         key: `history-${i}`,
         title: {
-          content: `${item.settings.url} - ${item.response.status}`
+          content: `${item.settings.method.toUpperCase()} ${item.settings.url} - ${item.response.status}`
         },
         content: {
           content: (
@@ -44,8 +44,18 @@ const HistoryList = (props: Props) => {
                 <WordBreakContent>{item.settings.url}</WordBreakContent>
                 <Message.Header>Headers</Message.Header>
                 <WordBreakContent>{JSON.stringify(item.settings.headers)}</WordBreakContent>
-                <Message.Header>body</Message.Header>
-                <WordBreakContent>{JSON.stringify(item.settings.data)}</WordBreakContent>
+                {/get|delete/.test(item.settings.method) && (
+                  <div>
+                    <Message.Header>Query</Message.Header>
+                    <WordBreakContent>{JSON.stringify(item.settings.data)}</WordBreakContent>
+                  </div>
+                )}
+                {/post|put/.test(item.settings.method) && (
+                  <div>
+                    <Message.Header>Body</Message.Header>
+                    <WordBreakContent>{JSON.stringify(item.settings.data)}</WordBreakContent>
+                  </div>
+                )}
               </Message>
               <Button
                 onClick={() => {

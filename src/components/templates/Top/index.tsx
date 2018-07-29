@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import JsonEditor from '../../../components/organisms/JsonEditor'
 import HistoryList from '../../../containers/organisms/HistoryList'
 import { RequestSettings } from '../../../modules/request/types'
+import SelectMethod from '../../organisms/SelectMethod'
 
 interface Props {
   level: string
@@ -20,7 +21,9 @@ interface Props {
 }
 
 interface FormValue {
+  method: string
   headers: string
+  query: string
   body: string
   baseUrl: string
   path: string
@@ -56,6 +59,10 @@ const Top = (props: FormProps) => {
     <Container>
       <Header as="h1">Api Tester</Header>
       <Form>
+        <Form.Field width="6">
+          <label>Method</label>
+          <SelectMethod name="method" value={values.method} setFieldValue={setFieldValue} />
+        </Form.Field>
         <Form.Field width="12">
           <label>BaseUrl</label>
           <Form.Input id="baseUrl" value={values.baseUrl} onChange={handleChange} onBlur={handleBlur} />
@@ -68,10 +75,18 @@ const Top = (props: FormProps) => {
           <label>Header</label>
           <JsonEditor name="headers" value={values.headers} setFieldValue={setFieldValue} />
         </Form.Field>
-        <Form.Field>
-          <label>Body</label>
-          <JsonEditor name="body" value={values.body} setFieldValue={setFieldValue} />
-        </Form.Field>
+        {/get|delete/.test(values.method) && (
+          <Form.Field>
+            <label>Query</label>
+            <JsonEditor name="query" value={values.query} setFieldValue={setFieldValue} />
+          </Form.Field>
+        )}
+        {/put|post/.test(values.method) && (
+          <Form.Field>
+            <label>Body</label>
+            <JsonEditor name="body" value={values.body} setFieldValue={setFieldValue} />
+          </Form.Field>
+        )}
         <Form.Group inline={true}>
           <Form.Field>
             <Form.Button primary={true} onClick={onClickSubmit}>
