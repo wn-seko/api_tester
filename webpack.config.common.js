@@ -4,8 +4,7 @@ module.exports = {
   entry: ['react-hot-loader/patch', './src/index.tsx'],
   output: {
     filename: 'bundle.js',
-    path: __dirname + '/dest',
-    publicPath: '/'
+    path: __dirname + '/dest'
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js']
