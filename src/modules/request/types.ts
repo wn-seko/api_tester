@@ -12,7 +12,9 @@ export enum ActionTypes {
   PUT_FAILURE = '[REQUEST]PUT_FAILURE',
   DELETE = '[REQUEST]DELETE',
   DELETE_SUCCESS = '[REQUEST]DELETE_SUCCESS',
-  DELETE_FAILURE = '[REQUEST]DELETE_FAILURE'
+  DELETE_FAILURE = '[REQUEST]DELETE_FAILURE',
+  ADD_FAVORITE = '[REQUEST]ADD_FAVORITE',
+  REMOVE_FAVORITE = '[REQUEST]REMOVE_FAVORITE'
 }
 
 export function createAction<T extends { type: ActionTypes }>(d: T): T {
@@ -34,6 +36,10 @@ export interface State {
     level: string
     settings: RequestSettings
     response: Response
+    timestamp: number
+  }>
+  favorite: Array<{
+    settings: RequestSettings
     timestamp: number
   }>
 }

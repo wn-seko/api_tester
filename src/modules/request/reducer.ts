@@ -10,7 +10,8 @@ export const initialState: State = {
     status: 0,
     data: null
   },
-  history: []
+  history: [],
+  favorite: []
 }
 
 export default (state: State = initialState, action: Action): State => {
@@ -19,10 +20,7 @@ export default (state: State = initialState, action: Action): State => {
     case ActionTypes.POST:
     case ActionTypes.PUT:
     case ActionTypes.DELETE:
-      return {
-        ...state,
-        loading: { ...state.loading, access: true }
-      }
+      return { ...state, loading: { ...state.loading, access: true } }
     case ActionTypes.GET_SUCCESS:
     case ActionTypes.POST_SUCCESS:
     case ActionTypes.PUT_SUCCESS:
@@ -58,6 +56,21 @@ export default (state: State = initialState, action: Action): State => {
             level: 'error'
           }
         ])
+      }
+    case ActionTypes.ADD_FAVORITE:
+      return {
+        ...state,
+        favorite: state.favorite.concat([
+          {
+            timestamp: action.payload.timestamp,
+            settings: action.payload.settings
+          }
+        ])
+      }
+    case ActionTypes.REMOVE_FAVORITE:
+      return {
+        ...state,
+        favorite: state.favorite.filter(f => f.timestamp !== action.payload.timestamp)
       }
     default:
       return state

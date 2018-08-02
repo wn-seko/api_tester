@@ -5,6 +5,7 @@ import styled from 'styled-components'
 
 import JsonEditor from '../../../components/organisms/JsonEditor'
 import HistoryList from '../../../containers/organisms/HistoryList'
+import FavoriteList from '../../../containers/organisms/FavoriteList'
 import { RequestSettings } from '../../../modules/request/types'
 import SelectMethod from '../../organisms/SelectMethod'
 
@@ -110,6 +111,8 @@ const Top = (props: FormProps) => {
           <WordBreakContent>{responseData}</WordBreakContent>
         </Message>
       )}
+      <Header as="h2">Favorite</Header>
+      <FavoriteList handleOpenQuery={handleOpenQuery} />
       <Header as="h2">History</Header>
       <HistoryList handleOpenQuery={handleOpenQuery} />
       <Dimmer active={loading.access} inverted={true}>

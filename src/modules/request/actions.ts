@@ -24,7 +24,10 @@ export const actions = {
   deleteSuccess: (response: Response, settings: RequestSettings, timestamp: number) =>
     createAction({ type: ActionTypes.DELETE_SUCCESS, payload: { response, settings, timestamp } }),
   deleteFailure: (response: Response, settings: RequestSettings, timestamp: number) =>
-    createAction({ type: ActionTypes.DELETE_FAILURE, payload: { response, settings, timestamp } })
+    createAction({ type: ActionTypes.DELETE_FAILURE, payload: { response, settings, timestamp } }),
+  addFavorite: (settings: RequestSettings) =>
+    createAction({ type: ActionTypes.ADD_FAVORITE, payload: { settings, timestamp: Date.now() } }),
+  removeFavorite: (timestamp: number) => createAction({ type: ActionTypes.REMOVE_FAVORITE, payload: { timestamp } })
 }
 
 export type Action = ActionUnion<typeof actions>

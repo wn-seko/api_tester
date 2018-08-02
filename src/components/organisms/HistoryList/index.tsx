@@ -12,6 +12,7 @@ interface HistoryProps {
 
 interface Props {
   handleOpenQuery: (settings: RequestSettings) => void
+  handleAddFavorite: (settings: RequestSettings) => void
   history: Array<HistoryProps>
 }
 
@@ -19,11 +20,23 @@ const WordBreakContent = styled(Message.Content)`
   word-break: break-all;
 `
 
+const getDataTitle = (method: string) => {
+  if (/get|delete/.test(method)) {
+    return 'Query'
+  }
+
+  if (/post|put/.test(method)) {
+    return 'Body'
+  }
+
+  return 'Data'
+}
+
 const HistoryList = (props: Props) => {
-  const { history, handleOpenQuery } = props
+  const { history, handleOpenQuery, handleAddFavorite } = props
 
   if (history.length === 0) {
-    return null
+    return <Message info={true}>No history</Message>
   }
 
   const sortedHistory = history.sort((ah: HistoryProps, bh: HistoryProps) => (ah.timestamp < bh.timestamp ? 1 : -1))
@@ -49,18 +62,8 @@ const HistoryList = (props: Props) => {
                 <WordBreakContent>{item.settings.url}</WordBreakContent>
                 <Message.Header>Headers</Message.Header>
                 <WordBreakContent>{JSON.stringify(item.settings.headers)}</WordBreakContent>
-                {/get|delete/.test(item.settings.method) && (
-                  <div>
-                    <Message.Header>Query</Message.Header>
-                    <WordBreakContent>{JSON.stringify(item.settings.data)}</WordBreakContent>
-                  </div>
-                )}
-                {/post|put/.test(item.settings.method) && (
-                  <div>
-                    <Message.Header>Body</Message.Header>
-                    <WordBreakContent>{JSON.stringify(item.settings.data)}</WordBreakContent>
-                  </div>
-                )}
+                <Message.Header>{getDataTitle(item.settings.method)}</Message.Header>
+                <WordBreakContent>{JSON.stringify(item.settings.data)}</WordBreakContent>
               </Message>
               <Button
                 onClick={() => {
@@ -68,6 +71,13 @@ const HistoryList = (props: Props) => {
                 }}
               >
                 Open Query
+              </Button>
+              <Button
+                onClick={() => {
+                  handleAddFavorite(item.settings)
+                }}
+              >
+                Add Favorite
               </Button>
             </div>
           )

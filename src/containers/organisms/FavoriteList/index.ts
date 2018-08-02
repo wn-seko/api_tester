@@ -4,30 +4,29 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actions, RootState } from '../../../modules'
 import { requestSelector } from '../../../modules/selector'
-import { RequestSettings, Response } from '../../../modules/request/types'
+import { RequestSettings } from '../../../modules/request/types'
 
-import HistoryList from '../../../components/organisms/HistoryList'
+import FavoriteList from '../../../components/organisms/FavoriteList'
 
 interface OuterProps {
   handleOpenQuery: (settings: RequestSettings) => void
 }
 
 interface InnerProps {
-  handleOpenQuery: (settings: RequestSettings) => void
-  history: Array<{
-    level: string
+  handleRemoveFavorite: (timestamp: number) => void
+  favorite: Array<{
     settings: RequestSettings
-    response: Response
+    timestamp: number
   }>
 }
 
 const connector = connect(
   (state: RootState) => ({
-    history: requestSelector.getHistory(state)
+    favorite: requestSelector.getFavorite(state)
   }),
   dispatch => {
-    const handleAddFavorite = actions.request.addFavorite
-    return bindActionCreators({ handleAddFavorite }, dispatch)
+    const handleRemoveFavorite = actions.request.removeFavorite
+    return bindActionCreators({ handleRemoveFavorite }, dispatch)
   }
 )
 
@@ -37,4 +36,4 @@ const enhancer = compose<InnerProps, OuterProps>(
   pure
 )
 
-export default enhancer(HistoryList)
+export default enhancer(FavoriteList)
